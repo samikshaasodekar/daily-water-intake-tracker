@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Water Intake Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="images/drink-water.png" type="image/png">
+</head>
+<body>
+  <div class="container">
+    <h1>Daily Water Intake Tracker</h1>
+
+    <div class="water-intake">
+      <form id="water-form">
+        <label for="intake">Water Intake:</label>
+        <div class="intake-info">
+          <div class="intake-options">
+            <button type="button" class="intake-btn" data-amount="250">Glass (250ml)</button>
+            <button type="button" class="intake-btn" data-amount="500">Bottle (500ml)</button>
+          </div>
+          <img src="images/img.png" alt="Water Bottle" class="water-icon">
+        </div>
+        <input type="number" id="intake" placeholder="Enter amount in ml" required>
+        <button type="submit">Add Intake</button>
+      </form>
+    </div>
+
+    <div class="weather-info">
+      <h2>Weather at Your Location</h2>
+      <div class="weather-buttons">
+        <form id="weather-form">
+          <label for="city">Enter City Name:</label>
+          <input type="text" id="city" placeholder="City name" required>
+          <button type="submit">Check Weather</button>
+        </form>
+        <button id="use-location">Use My Location</button>
+      </div>
+      <p id="weather-info">Enter a city name to get the weather info.</p>
+      <div id="weather-recommendation">You should drink 0.00 L more water.</div>
+    </div>
+
+    <div class="alarm-settings">
+      <h2>Set Alarm Reminder:</h2>
+      <div class="alarm-form">
+        <label for="alarm-time">Alarm Time (HH:MM):</label>
+        <input type="time" id="alarm-time">
+        <label for="alarm-interval">Interval Alarm (hours):</label>
+        <input type="number" id="alarm-interval" min="1" placeholder="Hours">
+      </div>
+      <div class="alarm-buttons">
+        <button id="set-alarm">Set Alarm</button>
+        <button id="set-alarm-interval">Set Interval Alarm</button>
+        <button id="stop-alarm">Stop Alarm</button>
+      </div>
+      <p id="target-message" style="display: none;">Congratulations! Your daily water intake target is complete.</p>
+    </div>
+  </div>
+
+  <!-- Audio elements for alarms -->
+  <audio id="alarm-sound" src="assets/nice_alarm.mp3"></audio>
+  <audio id="interval-alarm-sound" src="assets/nice_alarm.mp3"></audio>
+
+  <footer>
+    <p>© 2024 Daily Water Intake Tracker</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
