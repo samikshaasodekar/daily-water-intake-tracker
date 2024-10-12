@@ -12,7 +12,6 @@ const setAlarmIntervalButton = document.getElementById('set-alarm-interval');
 const alarmIntervalInput = document.getElementById('alarm-interval');
 const stopAlarmButton = document.getElementById('stop-alarm'); // Stop Alarm Button
 let totalWaterIntake = 0;
-let userWeight = null; // Variable to store user weight (optional)
 let temperature = null; // Variable to store temperature
 let alarmTimeout = null;
 let intervalId = null;
@@ -20,12 +19,6 @@ let alarmStopTimeout = null; // To handle the 1-minute stop for alarm sound
 
 // Load the audio file
 const alarmSound = document.getElementById('alarm-sound'); // Get the audio element
-
-// Function to estimate recommended daily water intake
-function calculateRecommendedIntake(weight) {
-  if (!weight) return 2; // Default base intake in liters if no weight information
-  return Math.floor(weight * 0.033); // 33ml per kg, converted to liters
-}
 
 // Handle Water Intake Form Submission
 waterForm.addEventListener('submit', (e) => {
@@ -41,14 +34,14 @@ waterForm.addEventListener('submit', (e) => {
   // Update average water recommendation based on total intake and temperature
   if (temperature !== null) {
     const weatherBasedIntake = (temperature >= 30 ? 3 : 2); // Simple example based on temperature
-    const recommendedIntake = (userWeight ? calculateRecommendedIntake(userWeight) : weatherBasedIntake) * 1000; // Convert liters to ml
+    const recommendedIntake = weatherBasedIntake * 1000; // Convert liters to ml
     const moreWater = Math.max(recommendedIntake - totalWaterIntake, 0).toFixed(2);
     const glasses = Math.ceil(moreWater / 250); // Calculate number of glasses (250 ml each)
     averageWater.textContent = `You should drink ${moreWater / 1000} L (${glasses} glasses) more water.`;
   }
-  
+
   // Check if the water intake target is met
-  if (totalWaterIntake >= (userWeight ? calculateRecommendedIntake(userWeight) * 1000 : (temperature >= 30 ? 3 : 2) * 1000)) {
+  if (totalWaterIntake >= (temperature >= 30 ? 3 : 2) * 1000) {
     alarmSound.pause(); // Stop the alarm sound if the target is met
     alarmSound.currentTime = 0; // Reset the audio to start
     alert('Congratulations! You have met your daily water intake goal.');
@@ -128,7 +121,7 @@ function fetchWeatherData(cityName, lat = null, lon = null) {
 
         // Update average water recommendation based on temperature
         const weatherBasedIntake = (temperature >= 30 ? 3 : 2); // Simple example based on temperature
-        const recommendedIntake = (userWeight ? calculateRecommendedIntake(userWeight) : weatherBasedIntake) * 1000; // Convert liters to ml
+        const recommendedIntake = weatherBasedIntake * 1000; // Convert liters to ml
         const moreWater = Math.max(recommendedIntake - totalWaterIntake, 0).toFixed(2);
         const glasses = Math.ceil(moreWater / 250); // Calculate number of glasses (250 ml each)
         averageWater.textContent = `You should drink ${moreWater / 1000} L (${glasses} glasses) more water.`;
@@ -205,3 +198,4 @@ function stopAlarm() {
   alarmSound.currentTime = 0; // Reset the audio to start
   alert('Alarm stopped!');
 }
+
